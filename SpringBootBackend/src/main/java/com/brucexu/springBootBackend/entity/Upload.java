@@ -2,8 +2,6 @@ package com.brucexu.springBootBackend.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents a file upload stored in the system.
  *
@@ -14,14 +12,13 @@ import java.time.LocalDateTime;
 public class Upload {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uploadId;
 
     private String userId;
     private String s3Key;
     @Enumerated(EnumType.STRING)
     private UploadStatus status;
-    private LocalDateTime timeStamp;
 
     /**
      * Creates a new upload record.
@@ -38,7 +35,6 @@ public class Upload {
         this.userId = userId;
         this.s3Key = s3Key;
         this.status = status;
-        timeStamp = LocalDateTime.now();
     }
 
     /**
@@ -57,6 +53,15 @@ public class Upload {
      */
     public Long getUploadId() {
         return uploadId;
+    }
+
+    /**
+     * Retrieves the uploadID upon insertion.
+     *
+     * @return uploadId
+     */
+    public String getS3Key() {
+        return s3Key;
     }
 
     /**
