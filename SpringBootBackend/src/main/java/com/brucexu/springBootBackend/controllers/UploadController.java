@@ -6,7 +6,6 @@ import com.brucexu.springBootBackend.entity.Personal;
 import com.brucexu.springBootBackend.entity.Upload;
 import com.brucexu.springBootBackend.entity.UploadStatus;
 import com.brucexu.springBootBackend.repository.*;
-import com.brucexu.springBootBackend.services.EmbeddingService;
 import com.brucexu.springBootBackend.services.LambdaParserService;
 import com.brucexu.springBootBackend.services.ResumeSaveService;
 import com.brucexu.springBootBackend.services.S3Service;
@@ -15,13 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
-public class uploadController {
+public class UploadController {
 
     @Autowired
     private UploadRepository uploadRepo;
@@ -34,8 +31,7 @@ public class uploadController {
     @Autowired
     private WorkExperienceContentRespository workExperienceContentRespository;
 
-    @Autowired
-    private EmbeddingService embeddingService;
+
     @Autowired
     private S3Service s3Service;
     @Autowired
@@ -129,14 +125,6 @@ public class uploadController {
         return parsedResume;
     }
 
-    @PostMapping("/uploads/testRAG")
-    public List<String> testRAG(@RequestBody Map<String, String> body) {
 
-        String query = body.get("query");
-        float[] queryEmbedding = embeddingService.embed(query);
-        String vector = embeddingService.toVectorString(queryEmbedding);
-
-        return workExperienceContentRespository.findSimilar(vector, 1);
-    }
 
 }
