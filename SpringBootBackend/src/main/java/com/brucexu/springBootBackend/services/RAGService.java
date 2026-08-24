@@ -1,16 +1,12 @@
 package com.brucexu.springBootBackend.services;
 
-import com.brucexu.springBootBackend.dto.ragResults.RagContextDTO;
-import com.brucexu.springBootBackend.dto.ragResults.RagReferenceDTO;
-import com.brucexu.springBootBackend.dto.ragResults.RagResultDTO;
+import com.brucexu.springBootBackend.dto.ragResults.WorkExperienceRagResultDTO;
 import com.brucexu.springBootBackend.repository.WorkExperienceContentRespository;
-import com.brucexu.springBootBackend.repository.projection.VectorSearchProjection;
+import com.brucexu.springBootBackend.repository.projection.WorkExperienceVectorSearchProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class RAGService {
@@ -28,14 +24,15 @@ public class RAGService {
     }
 
     // This function checks if the rag search are too irrelevant
-    private boolean hasRelevantContext(List<VectorSearchProjection> searchResults){
-        if (searchResults == null || searchResults.isEmpty()){
-            return false;
-        }
-        double distance = searchResults.get(0).getDistance();
-
-        return distance <= 0.65;
-    }
+    // No need anymore, the SQL query automatically filters
+//    private boolean hasRelevantContext(List<WorkExperienceVectorSearchProjection> searchResults){
+//        if (searchResults == null || searchResults.isEmpty()){
+//            return false;
+//        }
+//        double distance = searchResults.get(0).getDistance();
+//
+//        return distance <= 0.65;
+//    }
 
 
     // Notes:
@@ -44,33 +41,22 @@ public class RAGService {
     // 2. LangSmith evaluation can help you tune later: query → retrieved candidates →
     // relevance score → determine optimal distance threshold.
 
-    public List<RagResultDTO> vectorSearch(String query, int topK) {
+    public List<WorkExperienceRagResultDTO> workExperienceVectorSearch(String query, int topK) {
 
         float[] queryEmbedding = embeddingService.embed(query);
         String vector = embeddingService.toVectorString(queryEmbedding);
 
-        List<VectorSearchProjection> searchResults = workExperienceContentRespository.vectorSearch(vector, topK);
+        List<WorkExperienceVectorSearchProjection> searchResults = workExperienceContentRespository.vectorSearch(vector, topK);
 
         return searchResults.stream()
-                .map(result -> new RagResultDTO(
-                        new RagContextDTO(
-                                result.getPersonName(),
-                                result.getIsActive(),
-                                result.getIndustry(),
-                                result.getLatestCompany(),
-                                result.getCompanyName(),
-                                result.getTitle(),
-                                result.getEndDate(),
-                                result.getEmploymentType(),
-                                result.getContent()
-                        ),
-                        new RagReferenceDTO(
-                                result.getPersonalId(),
-                                result.getWorkExperienceId(),
-                                result.getContentId(),
-                                result.getDistance()
+                .map(result -> new WorkExperienceRagResultDTO(
+                            result.getContentId(),
+                            result.getDistance(),
+                            result.getWorkExperienceId(),
+                            result.getPersonalId(),
+                            result.getIsActive()
                         )
-                ))
+                    )
                 .toList();
     }
 
