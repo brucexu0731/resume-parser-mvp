@@ -22,7 +22,7 @@ public record PersonalDTO(
 
         //optional recruiting info
         Boolean active,
-        String Industry, //manual for now, AI generated later
+        String Industry, //manual for now, AI generated later, should be a list of pre-defined industries
         Boolean needVisa,
         String addDate,
         String addBy,

@@ -2,7 +2,7 @@ package com.brucexu.springBootBackend.services;
 
 import com.brucexu.springBootBackend.dto.ragResults.WorkExperienceRagResultDTO;
 import com.brucexu.springBootBackend.repository.WorkExperienceContentRespository;
-import com.brucexu.springBootBackend.repository.projection.WorkExperienceVectorSearchProjection;
+import com.brucexu.springBootBackend.repository.projections.WorkExperienceVectorSearchProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

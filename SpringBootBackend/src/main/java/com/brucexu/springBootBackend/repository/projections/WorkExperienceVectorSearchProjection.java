@@ -1,4 +1,4 @@
-package com.brucexu.springBootBackend.repository.projection;
+package com.brucexu.springBootBackend.repository.projections;
 
 public interface WorkExperienceVectorSearchProjection {
     Long getContentId();

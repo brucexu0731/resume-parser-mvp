@@ -1,7 +1,7 @@
 package com.brucexu.springBootBackend.repository;
 
 import com.brucexu.springBootBackend.entity.WorkExperienceContent;
-import com.brucexu.springBootBackend.repository.projection.WorkExperienceVectorSearchProjection;
+import com.brucexu.springBootBackend.repository.projections.WorkExperienceVectorSearchProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
