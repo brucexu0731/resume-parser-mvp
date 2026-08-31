@@ -1,8 +1,6 @@
 package com.brucexu.springBootBackend.repository.customRepositories;
 
 import com.brucexu.springBootBackend.dto.candidateFilter.CandidateFiltersDTO;
-import com.brucexu.springBootBackend.dto.candidateFilter.FilterResultDTO;
-import com.brucexu.springBootBackend.services.EmbeddingService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CandidateFilterRepository {
+public class RAGCandidateFilterRepositoryMultipleFields {
 
     @Autowired
     private EntityManager entityManager;
-
-    @Autowired
-    private EmbeddingService embeddingService;
 
     public List<Long> filter(
             CandidateFiltersDTO filters
