@@ -1,6 +1,6 @@
 package com.brucexu.springBootBackend.repository.customRepositories;
 
-import com.brucexu.springBootBackend.dto.candidateFilter.CandidateFiltersDTO;
+import com.brucexu.springBootBackend.dto.candidateFilter.SimpleCandidateFiltersDTO;
 import com.brucexu.springBootBackend.dto.candidateFilter.FilterResultDTO;
 import com.brucexu.springBootBackend.services.EmbeddingService;
 import jakarta.persistence.EntityManager;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CandidateFilterRepositoryWithVector {
+public class SimpleCandidateFilterRepositoryWithVector {
 
     @Autowired
     private EntityManager entityManager;
@@ -22,7 +22,7 @@ public class CandidateFilterRepositoryWithVector {
     private EmbeddingService embeddingService;
 
     public List<FilterResultDTO> filter(
-            CandidateFiltersDTO filters
+            SimpleCandidateFiltersDTO filters
     ) {
         StringBuilder sql = new StringBuilder("""
             SELECT DISTINCT

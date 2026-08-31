@@ -53,6 +53,8 @@ public class Personal {
     private String name;
     private String phoneNumber;
     private String email;
+    //resume S3 key
+    private String resumeS3Key;
     private String latestCompany;
     private String latestRole;
     private String isCurrent;
@@ -73,7 +75,7 @@ public class Personal {
 
     // Optional recruiting info
     private Boolean active;
-    private String industry; // Renamed to lowerCamelCase standard
+    private String industry; // User can only select from a list
     private Boolean needVisa;
     private String addDate;
     private String addBy;
@@ -95,7 +97,7 @@ public class Personal {
     }
 
     // All-Args Constructor
-    public Personal(Long personalId, String name, String phoneNumber, String email,
+    public Personal(Long personalId, String name, String phoneNumber, String email, String s3Key,
                     String latestCompany, String latestRole, String isCurrent,
                     String highestDegree, String highestDegreeSchool, String highestDegreeGraduationDate,
                     List<String> highestDegreeMajor, List<String> skills, String age,
@@ -108,6 +110,7 @@ public class Personal {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.resumeS3Key = s3Key;
         this.latestCompany = latestCompany;
         this.latestRole = latestRole;
         this.isCurrent = isCurrent;
@@ -168,6 +171,14 @@ public class Personal {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getResumeS3Key() {
+        return resumeS3Key;
+    }
+
+    public void setResumeS3Key(String s3Key) {
+        this.resumeS3Key = s3Key;
     }
 
     public String getLatestCompany() {

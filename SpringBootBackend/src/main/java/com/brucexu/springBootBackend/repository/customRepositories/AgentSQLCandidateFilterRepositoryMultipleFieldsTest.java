@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class AgentSQLCandidateFilterRepositoryMultipleFields {
+public class AgentSQLCandidateFilterRepositoryMultipleFieldsTest {
 
     @Autowired
     private EntityManager entityManager;
 
-    public List<Long> filter(
+    public List<String> filter(
             AgentCandidateFiltersDTO filters
     ) {
         StringBuilder sql = new StringBuilder("""
                 SELECT DISTINCT
-                        p.personal_id
+                        p.name
                     FROM personal p
                     JOIN work_experience we
                         ON we.personal_id = p.personal_id
@@ -199,13 +199,13 @@ public class AgentSQLCandidateFilterRepositoryMultipleFields {
         }
 
         sql.append("""
-                 ORDER BY p.personal_id
+                 ORDER BY p.name
                 """);
 
         Query query = entityManager.createNativeQuery(sql.toString());
         parameters.forEach(query::setParameter);
 
-        List<Long> res = query.getResultList();
+        List<String> res = query.getResultList();
 
         return res;
     }

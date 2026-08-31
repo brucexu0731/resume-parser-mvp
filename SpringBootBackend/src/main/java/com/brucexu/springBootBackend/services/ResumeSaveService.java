@@ -30,9 +30,13 @@ public class ResumeSaveService {
 
         Personal personal = new Personal();
 
+        // DO NOT DO .STRIP() HERE! A LOT OF ENTRIES CAN BE NULL
         personal.setName(dto.name());
         personal.setPhoneNumber(dto.phoneNumber());
         personal.setEmail(dto.email());
+        //use the one from parsedResume DTO, personalDTO is for returning, it would be null here
+        personal.setResumeS3Key(parsedResume.s3Key());
+
         personal.setLatestCompany(dto.latestCompany());
         personal.setLatestRole(dto.latestRole());
         personal.setHighestDegree(dto.highestDegree());
@@ -102,8 +106,10 @@ public class ResumeSaveService {
                             Education education = new Education();
 
                             education.setSchoolName(educationDTO.schoolName());
+                            //These two need to be lists
                             education.setDegree(educationDTO.degree());
                             education.setMajor(educationDTO.major());
+
                             education.setGraduationDate(educationDTO.graduationDate());
                             education.setGrade(educationDTO.grade());
                             education.setHonors(educationDTO.honors());

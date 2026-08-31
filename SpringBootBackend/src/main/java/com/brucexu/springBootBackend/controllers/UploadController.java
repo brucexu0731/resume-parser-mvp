@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -62,6 +63,9 @@ public class UploadController {
     @PostMapping ("/uploads/presign")
     public Map<String, String> getUploadUrl(@RequestBody Map<String, Object> body) {
 
+        // to do: protect the S3 endpoint:
+        // enforce size limits and rate limit
+
         String key = "uploads/" + UUID.randomUUID() + "-" + body.get("filename");
 
         String url = s3Service.generateUploadUrl(
@@ -96,6 +100,15 @@ public class UploadController {
         upload.setStatus(UploadStatus.UPLOADED);
         String key = upload.getS3Key();
         ParsedResume parsedResume = lambdaParserService.parseResume(bucketName, key);
+
+        //adding the s3 key
+        parsedResume = new ParsedResume(
+                key,
+                parsedResume.personal(),
+                parsedResume.work(),
+                parsedResume.education()
+        );
+
         return parsedResume;
     }
 
@@ -109,6 +122,20 @@ public class UploadController {
     public SaveResponseDTO validateAndSaveUpload(@RequestBody ParsedResume validatedResume){
         //TO DO:
         // check if the person's profile is already in the database, if so, return user_id
+        Optional<Long> findPerson = personalRepo
+                .findPersonalId(
+                        validatedResume.personal().name(),
+                        validatedResume.personal().email(),
+                        validatedResume.personal().phoneNumber()
+                );
+
+        if (findPerson.isPresent()){
+            //need to go delete the uploaded resume
+            String s3Key = validatedResume.s3Key();
+            s3Service.deleteObject(bucketName, s3Key);
+
+            return new SaveResponseDTO(findPerson.get(), "DUPLICATE");
+        }
 
         Personal savedResume = resumeSaveService.saveParsedResume(validatedResume);
         Long personalId = savedResume.getPersonalId();

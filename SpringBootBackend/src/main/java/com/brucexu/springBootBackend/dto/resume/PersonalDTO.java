@@ -6,6 +6,7 @@ public record PersonalDTO(
         String name,
         String phoneNumber,
         String email,
+        String resumeS3Key,
         String latestCompany,
         String latestRole,
         String isCurrent,

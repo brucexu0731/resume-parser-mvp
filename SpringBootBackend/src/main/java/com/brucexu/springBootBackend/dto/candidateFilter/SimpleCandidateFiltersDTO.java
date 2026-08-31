@@ -1,6 +1,6 @@
 package com.brucexu.springBootBackend.dto.candidateFilter;
 
-public record CandidateFiltersDTO(
+public record SimpleCandidateFiltersDTO(
         String name,
         String phoneNumber,
         String email,

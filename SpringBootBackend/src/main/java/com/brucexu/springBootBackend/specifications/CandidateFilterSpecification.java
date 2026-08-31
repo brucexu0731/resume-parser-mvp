@@ -1,6 +1,6 @@
 package com.brucexu.springBootBackend.specifications;
 
-import com.brucexu.springBootBackend.dto.candidateFilter.CandidateFiltersDTO;
+import com.brucexu.springBootBackend.dto.candidateFilter.SimpleCandidateFiltersDTO;
 import com.brucexu.springBootBackend.entity.Personal;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -19,7 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
  */
 public class CandidateFilterSpecification {
 
-    public static Specification<Personal> getCandidateFilterSpecification(CandidateFiltersDTO filters) {
+    public static Specification<Personal> getCandidateFilterSpecification(SimpleCandidateFiltersDTO filters) {
         return new Specification<Personal>() {
             @Override
             public @Nullable Predicate toPredicate(Root<Personal> root,
