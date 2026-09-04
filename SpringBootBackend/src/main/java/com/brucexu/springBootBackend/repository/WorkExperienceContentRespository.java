@@ -14,10 +14,11 @@ public interface WorkExperienceContentRespository
     @Query(value = """
             SELECT
                 p.personal_id AS personalId,
-                p.active AS isActive,
                 we.work_experience_id AS workExperienceId,
                 wec.id AS contentId,
-                wec.embedding <=> CAST(:queryVector AS vector) AS distance
+                wec.embedding <=> CAST(:queryVector AS vector) AS distance,
+                wec.content AS content,
+                we.company_name AS companyName
         
             FROM work_experience_content wec
             JOIN work_experience we
@@ -27,6 +28,10 @@ public interface WorkExperienceContentRespository
                             
             WHERE p.active = true 
                 AND wec.embedding <=> CAST(:queryVector AS vector) < 0.65
+                AND (
+                        :filterByIds = false
+                        OR p.personal_id IN (:ids)
+                    )
         
             ORDER BY distance
                         
@@ -35,7 +40,9 @@ public interface WorkExperienceContentRespository
             nativeQuery = true)
     List<WorkExperienceVectorSearchProjection> vectorSearch(
             @Param("queryVector") String queryVector,
-            @Param("topK") int topK
+            @Param("topK") int topK,
+            @Param("ids") List<Long> ids,
+            @Param("filterByIds") boolean filterByIds
     );
 
 }

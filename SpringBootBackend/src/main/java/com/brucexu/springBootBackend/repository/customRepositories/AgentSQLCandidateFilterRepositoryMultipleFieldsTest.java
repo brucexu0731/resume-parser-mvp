@@ -21,7 +21,7 @@ public class AgentSQLCandidateFilterRepositoryMultipleFieldsTest {
     ) {
         StringBuilder sql = new StringBuilder("""
                 SELECT DISTINCT
-                        p.name
+                        p.name,
                     FROM personal p
                     JOIN work_experience we
                         ON we.personal_id = p.personal_id

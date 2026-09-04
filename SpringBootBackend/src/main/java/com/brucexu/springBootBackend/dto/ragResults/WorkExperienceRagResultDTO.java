@@ -6,5 +6,6 @@ public record WorkExperienceRagResultDTO(
 
         Long workExperienceId,
         Long personalId,
-        Boolean isActive
+        String content,
+        String companyName
 ) {}

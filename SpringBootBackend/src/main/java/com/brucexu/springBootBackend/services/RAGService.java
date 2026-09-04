@@ -41,12 +41,12 @@ public class RAGService {
     // 2. LangSmith evaluation can help you tune later: query → retrieved candidates →
     // relevance score → determine optimal distance threshold.
 
-    public List<WorkExperienceRagResultDTO> workExperienceVectorSearch(String query, int topK) {
+    public List<WorkExperienceRagResultDTO> workExperienceVectorSearch(String query, int topK, List<Long> ids, boolean filterByIds) {
 
         float[] queryEmbedding = embeddingService.embed(query);
         String vector = embeddingService.toVectorString(queryEmbedding);
 
-        List<WorkExperienceVectorSearchProjection> searchResults = workExperienceContentRespository.vectorSearch(vector, topK);
+        List<WorkExperienceVectorSearchProjection> searchResults = workExperienceContentRespository.vectorSearch(vector, topK, ids, filterByIds);
 
         return searchResults.stream()
                 .map(result -> new WorkExperienceRagResultDTO(
@@ -54,7 +54,8 @@ public class RAGService {
                             result.getDistance(),
                             result.getWorkExperienceId(),
                             result.getPersonalId(),
-                            result.getIsActive()
+                            result.getContent(),
+                            result.getCompanyName()
                         )
                     )
                 .toList();

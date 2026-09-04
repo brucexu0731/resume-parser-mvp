@@ -6,5 +6,6 @@ public interface WorkExperienceVectorSearchProjection {
 
     Long getWorkExperienceId();
     Long getPersonalId();
-    Boolean getIsActive();
+    String getContent();
+    String getCompanyName();
 }
