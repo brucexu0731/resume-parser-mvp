@@ -26,6 +26,7 @@ public interface PersonalRepository extends JpaRepository<Personal, Long> {
 
     @Query(value = """
             SELECT 
+                p.personal_id as id,
                 p.name AS name,
                 p.phone_number AS phoneNumber,
                 p.email AS email,

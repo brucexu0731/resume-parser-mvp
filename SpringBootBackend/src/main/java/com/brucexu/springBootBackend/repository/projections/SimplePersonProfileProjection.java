@@ -2,6 +2,7 @@ package com.brucexu.springBootBackend.repository.projections;
 
 public interface SimplePersonProfileProjection {
 
+    Long getId();
     String getName();
     String getPhoneNumber();
     String getEmail();

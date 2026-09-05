@@ -3,6 +3,7 @@ package com.brucexu.springBootBackend.dto.personalProfile;
 import java.util.List;
 
 public record SimplePersonProfileDTO(
+        Long id,
         String name,
         String phoneNumber,
         String email,

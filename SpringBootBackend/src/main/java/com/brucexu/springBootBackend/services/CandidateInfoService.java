@@ -45,6 +45,7 @@ public class CandidateInfoService {
 
 
                         return new SimplePersonProfileDTO(
+                                p.getId(),
                                 p.getName(),
                                 p.getPhoneNumber(),
                                 p.getEmail(),
